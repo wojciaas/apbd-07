@@ -4,5 +4,6 @@ namespace rest_api_warehouse.Interfaces;
 
 public interface IWarhouseService
 {
-    public Task<int> AddGoods(WarehouseDTO warehouseDto);
+    Task<int> AddGoods(WarehouseDTO warehouseDto);
+    Task<int> AddGoodsByProcedure(WarehouseDTO warehouseDto);
 }

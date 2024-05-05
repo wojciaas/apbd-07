@@ -1,3 +1,4 @@
+using System.Data;
 using System.Data.Common;
 using System.Data.SqlClient;
 using rest_api_warehouse.Interfaces;
@@ -136,5 +137,24 @@ public class WarehouseRepository : IWarehouseRepository
         }
 
         return id;
+    }
+
+    public async Task<int> AddGoodsByProcedure(int idProduct, int idWarehouse, int amount)
+    {
+        await using SqlConnection conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
+        await using SqlCommand com = new SqlCommand();
+        
+        com.Connection = conn;
+        com.CommandText = "AddProductToWarehouse";
+        com.CommandType = CommandType.StoredProcedure;
+        
+        com.Parameters.AddWithValue("@IdProduct", idProduct);
+        com.Parameters.AddWithValue("@IdWarehouse", idWarehouse);
+        com.Parameters.AddWithValue("@Amount", amount);
+        com.Parameters.AddWithValue("@CreatedAt", DateTime.Now);
+        
+        await conn.OpenAsync();
+        
+        return Convert.ToInt32(await com.ExecuteScalarAsync());
     }
 }

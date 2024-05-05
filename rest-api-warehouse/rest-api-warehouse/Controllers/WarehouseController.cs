@@ -24,7 +24,20 @@ public class WarehouseController : ControllerBase
         }
         catch (Exception e)
         {
+            return NotFound(e.Message);
+        }
+    }
+    
+    [HttpPost("byProcedure")]
+    public async Task<IActionResult> AddGoodsByProcedure(WarehouseDTO warehouseDto)
+    {
+        try
+        {
+            return Ok($"Product has been added with id = {await _warehouseService.AddGoodsByProcedure(warehouseDto)}");
+        }
+        catch (Exception e)
+        {
             return NotFound(e.StackTrace);
         }
-    }  
+    }
 }
