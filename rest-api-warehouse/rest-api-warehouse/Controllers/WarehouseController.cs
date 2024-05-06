@@ -37,7 +37,7 @@ public class WarehouseController : ControllerBase
         }
         catch (Exception e)
         {
-            return NotFound(e.StackTrace);
+            return NotFound(e.Message);
         }
     }
 }
